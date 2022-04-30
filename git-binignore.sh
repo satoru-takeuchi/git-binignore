@@ -1,0 +1,30 @@
+#!/bin/bash
+
+TOPDIR=""
+while true; do
+    if [ -d .git ] ; then
+        TOPDIR=${PWD}
+        break
+    fi
+    if [ $(realpath .) = "/" ] ; then
+        echo "git didn't found" >&2
+        exit 1
+    fi
+    cd ../
+done
+
+cd $TOPDIR
+
+BINS=$(find . -type f -exec file {} \; | grep -E ': ELF .*(executable|shared object),' | awk -F: '{print $1}')
+for b in $BINS ; do
+    BASE=$(basename $b)
+    DIR=$(dirname $b)
+    GITIGNORE=$DIR/.gitignore
+    if [ ! -e $GITIGNORE ] ; then
+        touch $GITIGNORE
+    fi
+    if grep -q "^${BASE}$" $GITIGNORE ; then
+        continue
+    fi
+    echo $BASE >> $GITIGNORE
+done
