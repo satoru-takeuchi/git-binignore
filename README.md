@@ -5,10 +5,16 @@ You can run this script any directories under a git repository. If this script f
 
 # install
 
-Just copy "git-binignore.sh" into anywhere you like (e.g. "/usr/local/bin").
+Copy "git-binignore" into anywhere you like (e.g. "/usr/local/bin").
 
 # usage
 
 ```console
-git-binignore.sh
+git-binignore
+```
+
+or run this as a git subcommand.
+
+```console
+git gitignore
 ```
