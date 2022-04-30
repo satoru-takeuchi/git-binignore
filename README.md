@@ -1,5 +1,5 @@
 # git-binignore
-`git-binignore` add any binary executables and shared objects under a git repository to ".gitignore."
+`git-binignore` adds any binary executables and shared objects under a git repository to ".gitignore."
 
 Let assume a git repository which has three so-called "hello world" programs written in C, Go, and Python3.
 
@@ -39,7 +39,7 @@ Untracked files:
 ...
 ```
 
-In most cases, we want to ignore them. However, it's annoying to add them in ".gitignore" one-by-one. We often encounter this situation when writing sample programs written in books and articles. We are freed from this bothersome work by "git-binignore."
+In most cases, we want to ignore them. However, it's annoying to add them to ".gitignore" one-by-one. We often encounter this situation when writing sample programs written in books and articles. We are freed from this bothersome work by "git-binignore."
 
 ```console
 $ git binignore
