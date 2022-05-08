@@ -1,5 +1,14 @@
 #!/bin/bash
 
+ADD=0
+
+while getopts a OPT ; do
+    case $OPT in
+        a) ADD=1;;
+	*) usage; exit 1;;
+    esac
+done
+
 TOPDIR=""
 while true; do
     if [ -d .git ] ; then
@@ -15,7 +24,7 @@ done
 
 cd $TOPDIR
 
-# We should also regards shared objects as executables to handle Position-Independent Executable (PIE). 
+# We should also regard shared objects as executables to handle Position-Independent Executable (PIE). 
 # `file` reports this kind of executables as shared objects.
 BINS=$(find . -type f -exec file {} \; | grep -E ': ELF .*(executable|shared object),' | awk -F: '{print $1}')
 for b in $BINS ; do
@@ -25,8 +34,10 @@ for b in $BINS ; do
     if [ ! -e $GITIGNORE ] ; then
         touch $GITIGNORE
     fi
-    if grep -q "^${BASE}$" $GITIGNORE ; then
-        continue
+    if grep -qv "^${BASE}$" $GITIGNORE ; then
+        echo $BASE >> $GITIGNORE
     fi
-    echo $BASE >> $GITIGNORE
+    if [ $ADD -eq 1 ] ; then
+        git add $GITIGNORE
+    fi
 done
