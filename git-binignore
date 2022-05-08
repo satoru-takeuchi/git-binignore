@@ -34,7 +34,9 @@ for b in $BINS ; do
     if [ ! -e $GITIGNORE ] ; then
         touch $GITIGNORE
     fi
-    if grep -qv "^${BASE}$" $GITIGNORE ; then
+    if grep -q "^${BASE}$" $GITIGNORE ; then
+	:
+    else
         echo $BASE >> $GITIGNORE
     fi
     if [ $ADD -eq 1 ] ; then
